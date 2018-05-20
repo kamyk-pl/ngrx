@@ -1,7 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Collections} from '../model/models';
+import { Collections, NgRxBook } from '../model/models';
 import {ShelfService} from '../services/shelf.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import { NgrxModuleState } from '../store';
+import { Store, select } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-books-shelf',
@@ -18,6 +21,7 @@ export class BooksShelfComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private shelfService: ShelfService,
+    private store$: Store<NgrxModuleState>,
   ) {}
 
   ngOnInit() {
@@ -29,24 +33,32 @@ export class BooksShelfComponent implements OnInit {
   }
 
   private getData() {
+    this.store$
+      .pipe(
+        select(state => state && state.books && state.books.items),
+        map((bookItems: NgRxBook[]) => this.mode ?
+          bookItems.filter(book => book.collection === this.mode) :
+          bookItems
+        )
+      )
+      .subscribe((bookItems: NgRxBook[]) => {
+        this.books = bookItems; // TODO Do it like a human being
+      });
+
     switch (this.mode) {
       case Collections.READ : {
-        this.books = this.shelfService.getBookRead();
         this.title = 'Books already read';
         break;
       }
       case Collections.READING : {
-        this.books = this.shelfService.getBooksReading();
         this.title = 'Books currently reading';
         break;
       }
       case Collections.TO_READ : {
-        this.books = this.shelfService.getBooksToRead();
         this.title = 'Books to read';
         break;
       }
       default: {
-        this.books = this.shelfService.getBooks();
         this.title = 'All my books';
       }
     }
