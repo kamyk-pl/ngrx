@@ -4,6 +4,17 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Integrating ngrx
 
+### Step 2
+
+* Inject `Store<NgrxModuleState>` to the `BooksShelfComponent`
+* Use the store to render books in `BooksShelfComponent`:
+  * Stop using the service in `getData`
+  * Fetch all books from the store using `select` operator,
+  * **Temporarily** subscribe to the store and assign them to the existing `books` field
+  * Map the book collection to a filtered one, based on `this.mode` (if set)
+  
+_Since we're not relying on internal component state anymore, adding books won't work for a while._
+
 ### Step 1
 
 * Install `@ngrx/store` package
