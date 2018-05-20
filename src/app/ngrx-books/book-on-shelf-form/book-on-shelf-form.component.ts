@@ -25,6 +25,4 @@ export class BookOnShelfFormComponent implements OnInit {
     title.value = '';
     collection.value = '';
   }
-
-
 }

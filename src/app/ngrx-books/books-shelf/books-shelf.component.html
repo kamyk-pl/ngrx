@@ -19,7 +19,7 @@
     <h2>Read</h2>
   </div>
  <app-books-on-shelf class="book"
-                     *ngFor="let book of books"
+                     *ngFor="let book of books$ | async"
                      [book]="book"
                      (collectionChange)="changeCollectionHandler($event)">
  </app-books-on-shelf>

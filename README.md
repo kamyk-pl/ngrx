@@ -4,6 +4,16 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Integrating ngrx
 
+### Step 4
+
+* Implement `UpdateBook` action that will be dispatched when e.g. moving a book
+* Handle updating a book in the reducer:
+  * Notice that there's no invariant property, so introduce `id`
+  * Assign unique id to a `NgrxBook`, use `uuid` package
+  * Handle an update action that carries an `id` 
+* Test the reducer (think of it as comparing _state after_ passing an action with _expected state_)
+* Dispatch the update action on book move (`BookShelfComponent`)
+
 ### Step 3
 
 * Refactor `BooksShelfComponent` to use `| async` instead of subscribing to `books$`
