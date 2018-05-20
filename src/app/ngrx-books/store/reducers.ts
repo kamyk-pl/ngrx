@@ -1,5 +1,6 @@
 import { Collections, NgRxBook } from '../model/models';
 import { Action } from '@ngrx/store';
+import { UPDATE_BOOK, UpdateBook } from './actions';
 
 export interface BooksState {
   items: NgRxBook[];
@@ -20,5 +21,17 @@ export function booksReducer(state: BooksState = initialBooksState, action: Acti
   console.group('%cBooks reducer:', 'color: orange;');
   console.log(state, action);
   console.groupEnd();
-  return state;
+  switch (action.type) {
+    case UPDATE_BOOK: {
+      const { payload } = action as UpdateBook;
+      const items = state.items.map(
+        book => payload.id === book.id ?
+          { ...book, ...payload} :
+          book
+      );
+      return { ...state, items };
+    }
+    default:
+      return state;
+  }
 }

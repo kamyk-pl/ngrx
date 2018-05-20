@@ -7,6 +7,7 @@ import { Store, select } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { selectBookItems } from '../store/selectors';
+import { UpdateBook } from '../store/actions';
 
 @Component({
   selector: 'app-books-shelf',
@@ -64,7 +65,10 @@ export class BooksShelfComponent implements OnInit {
   }
 
   changeCollectionHandler({book, newCollection}) {
-    console.log('Book has changed collection', book, newCollection);
+    this.store$.dispatch(new UpdateBook({
+      ...book,
+      collection: newCollection,
+    }));
   }
 
   newBookHandler(newBook) {
