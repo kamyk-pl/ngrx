@@ -4,6 +4,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Integrating ngrx
 
+### Exercise 1
+
+* Implement adding a new book: 
+  ** Create `AddBook` action
+  ** Handle the action in the reducer
+  ** Dispatch the action in `BooksShelfComponent` in appropriate handler
+
 ### Step 5
 
 * Remove unused methods from `ShelfService`
