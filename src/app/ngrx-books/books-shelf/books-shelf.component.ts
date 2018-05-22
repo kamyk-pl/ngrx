@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Collections, NgRxBook } from '../model/models';
-import {ShelfService} from '../services/shelf.service';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import { ShelfService } from '../services/shelf.service';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgrxModuleState } from '../store';
 import { Store, select } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { selectBookItems } from '../store/selectors';
-import { LoadBooks, UpdateBook } from '../store/actions';
+import { AddBook, LoadBooks, UpdateBook } from '../store/actions';
 
 @Component({
   selector: 'app-books-shelf',
@@ -73,7 +73,7 @@ export class BooksShelfComponent implements OnInit {
 
   newBookHandler(newBook) {
     this.shelfService.addBook(newBook);
-    this.getData();
+    this.store$.dispatch(new AddBook(newBook));
   }
 
   loadBooks() {

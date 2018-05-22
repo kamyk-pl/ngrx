@@ -4,6 +4,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Integrating ngrx
 
+
+### Step 6
+
+* Install `@ngrx/store-devtools`
+* Install _in your web browser_ the [Redux Devtools Extension](http://zalmoxisus.github.io/redux-devtools-extension/)
+* Wire-up `StoreDevToolsModule.instrument({ maxAge: 25 })` with your module
+
 ### Exercise 1
 
 * Implement adding a new book: 
