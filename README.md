@@ -4,6 +4,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Integrating ngrx
 
+### Step 7
+
+* Install `@ngrx/router-store` package
+* Extend `NgrxModuleState` to have router key of type `RouterReducerState<RouterStateUrl>` - the `RouterStateUrl` was implemented for you in `store/router-store.ts`
+* Import and register `routerReducer` in your present `ActionReducerMap` (suggested key: `router`)
+* Wire up `StoreRouterConnectingModule.forRoot({ stateKey: 'router' })` with your module
+* Add `{ provide: RouterStateSerializer, useClass: CustomSerializer }` to your module providers. `CustomSerializer` is implemented in `store/router-store.ts`.
 
 ### Step 6
 

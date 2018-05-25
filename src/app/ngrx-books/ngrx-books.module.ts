@@ -9,6 +9,8 @@ import { reducersMap } from './store';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { BooksEffects } from './store/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   imports: [
@@ -25,6 +27,7 @@ import { BooksEffects } from './store/effects';
       component: BooksShelfComponent,
     }]),
     StoreModule.forRoot(reducersMap),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([BooksEffects]),
   ],
   declarations: [BooksShelfComponent, BooksOnShelfComponent, BookOnShelfFormComponent],
