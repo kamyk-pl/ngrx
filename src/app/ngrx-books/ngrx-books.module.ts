@@ -11,6 +11,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { BooksEffects } from './store/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../../environments/environment';
+import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
+import { CustomSerializer } from './store/router-store';
 
 @NgModule({
   imports: [
@@ -29,9 +31,15 @@ import { environment } from '../../environments/environment';
     StoreModule.forRoot(reducersMap),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([BooksEffects]),
+    StoreRouterConnectingModule.forRoot({
+      stateKey: 'router',
+    }),
   ],
   declarations: [BooksShelfComponent, BooksOnShelfComponent, BookOnShelfFormComponent],
-  providers: [ShelfService]
+  providers: [
+    ShelfService,
+    { provide: RouterStateSerializer, useClass: CustomSerializer },
+  ]
 })
 export class NgrxBooksModule {
 }

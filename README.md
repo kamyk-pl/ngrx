@@ -4,6 +4,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Integrating ngrx
 
+
+### Step 8
+
+* Go to your reducer and clear items in the initial state,
+* Go to `books-shelf.component.html` and hide `div.collection_container` when books are not loaded with `*ngIf`
+* Add there a notification that books are loading
+
 ### Step 7
 
 * Install `@ngrx/router-store` package
