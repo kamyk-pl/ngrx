@@ -4,7 +4,7 @@ import { ShelfService } from '../services/shelf.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgrxModuleState } from '../store';
 import { Store, select } from '@ngrx/store';
-import { map, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { selectBookItems, selectCollection } from '../store/selectors';
 import { AddBook, LoadBooks, UpdateBook } from '../store/actions';
@@ -44,11 +44,6 @@ export class BooksShelfComponent implements OnInit {
     this.books$ = this.store$
       .pipe(
         select(selectBookItems),
-        withLatestFrom(this.mode$),
-        map(([bookItems, mode]) => mode ?
-          bookItems.filter(book => book.collection === mode) :
-          bookItems
-        )
       );
 
     this.mode$

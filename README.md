@@ -4,6 +4,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Integrating ngrx
 
+### Final step
+* Install `jasmine-marbles`
+* Write a hot marble/observable that will emulate a stream of actions
+* Write a cold marble/observable that will emulate the behaviour of the effect
+* Compare them using `expect(...).toBeObservable(...)`
+
 ### Exercise 3
 * Use the effect from Ex2 to pass `collection` from router store to `ShelfService.getData`
 * Adjust `ShelfService.getData` to filter out books depending on the collection (optional argument)
