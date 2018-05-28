@@ -9,7 +9,7 @@
 <button (click)="loadBooks()">Reload books</button>
 <app-book-on-shelf-form (newBook)=newBookHandler($event)></app-book-on-shelf-form>
 
-<div class="collection_container">
+<div class="collection_container" *ngIf="(books$ | async)?.length > 0">
   <div class="to_read header" *ngIf="!mode || mode === 'to_read'">
     <h2>To Read</h2>
   </div>
@@ -24,4 +24,7 @@
                      [book]="book"
                      (collectionChange)="changeCollectionHandler($event)">
  </app-books-on-shelf>
+</div>
+<div *ngIf="(books$ | async)?.length == 0" class="loading">
+  Loading...
 </div>

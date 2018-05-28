@@ -9,14 +9,7 @@ export interface BooksState {
 
 export const initialBooksState = {
   loading: false,
-  items: [
-    new NgRxBook('Gra o Tron', Collections.TO_READ),
-    new NgRxBook('Wiedźmin', Collections.READING),
-    new NgRxBook('Władca Pierscienia', Collections.READ),
-    new NgRxBook('JS The Good Parts', Collections.TO_READ),
-    new NgRxBook('Clean Code', Collections.READ),
-    new NgRxBook('You don\'t know JS', Collections.READING),
-  ]
+  items: [],
 };
 
 export function booksReducer(state: BooksState = initialBooksState, action: Action) {

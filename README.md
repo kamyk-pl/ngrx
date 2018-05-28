@@ -5,6 +5,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Integrating ngrx
 
 
+### Exercise 2
+ 
+* Add an Effect to your effects class, that will start fetching books when `ROUTER_NAVIGATION` action appears
+* Write selectors that will help you get `store.router.state.params.collection` that tells which shelf is selected.
+* Use these selectors to set `mode$` in `BooksShelfComponent`
+
 ### Step 8
 
 * Go to your reducer and clear items in the initial state,
