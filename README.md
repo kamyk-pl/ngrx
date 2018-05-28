@@ -4,6 +4,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Integrating ngrx
 
+### Exercise 3
+* Use the effect from Ex2 to pass `collection` from router store to `ShelfService.getData`
+* Adjust `ShelfService.getData` to filter out books depending on the collection (optional argument)
+* Hide shelves in `BooksShelfComponent` based on the value of `mode$` (collection).
+* Remove data filtering data logic from `BooksShelfComponent`
 
 ### Exercise 2
  

@@ -4,10 +4,11 @@ import { ShelfService } from '../services/shelf.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgrxModuleState } from '../store';
 import { Store, select } from '@ngrx/store';
-import { map } from 'rxjs/operators';
+import { map, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
-import { selectBookItems } from '../store/selectors';
+import { selectBookItems, selectCollection } from '../store/selectors';
 import { AddBook, LoadBooks, UpdateBook } from '../store/actions';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-books-shelf',
@@ -17,8 +18,10 @@ import { AddBook, LoadBooks, UpdateBook } from '../store/actions';
 export class BooksShelfComponent implements OnInit {
   books$: Observable<NgRxBook[]>;
   title: string;
-  mode: Collections | undefined;
+  mode$: Observable<Collections | undefined>;
   collections = Collections;
+  private destroySubj: Subject<boolean> = new Subject();
+  destroy$: Observable<boolean> = this.destroySubj.asObservable();
 
   constructor(
     private router: Router,
@@ -29,39 +32,46 @@ export class BooksShelfComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
-      console.log('Router params', params);
-      this.mode = params.collection;
       this.getData();
     });
   }
 
   private getData() {
+    this.mode$ = this.store$.pipe(
+      select(selectCollection)
+    );
+
     this.books$ = this.store$
       .pipe(
         select(selectBookItems),
-        map((bookItems: NgRxBook[]) => this.mode ?
-          bookItems.filter(book => book.collection === this.mode) :
+        withLatestFrom(this.mode$),
+        map(([bookItems, mode]) => mode ?
+          bookItems.filter(book => book.collection === mode) :
           bookItems
         )
       );
 
-    switch (this.mode) {
-      case Collections.READ : {
-        this.title = 'Books already read';
-        break;
-      }
-      case Collections.READING : {
-        this.title = 'Books currently reading';
-        break;
-      }
-      case Collections.TO_READ : {
-        this.title = 'Books to read';
-        break;
-      }
-      default: {
-        this.title = 'All my books';
-      }
-    }
+    this.mode$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(mode => {
+        switch (mode) {
+          case Collections.READ: {
+            this.title = 'Books already read';
+            return;
+          }
+          case Collections.READING: {
+            this.title = 'Books currently reading';
+            return;
+          }
+          case Collections.TO_READ: {
+            this.title = 'Books to read';
+            return;
+          }
+          default: {
+            this.title = 'All my books';
+          }
+        }
+      });
   }
 
   changeCollectionHandler({book, newCollection}) {
@@ -72,7 +82,6 @@ export class BooksShelfComponent implements OnInit {
   }
 
   newBookHandler(newBook) {
-    this.shelfService.addBook(newBook);
     this.store$.dispatch(new AddBook(newBook));
   }
 

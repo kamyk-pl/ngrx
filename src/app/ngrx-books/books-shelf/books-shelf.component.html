@@ -10,13 +10,13 @@
 <app-book-on-shelf-form (newBook)=newBookHandler($event)></app-book-on-shelf-form>
 
 <div class="collection_container" *ngIf="(books$ | async)?.length > 0">
-  <div class="to_read header" *ngIf="!mode || mode === 'to_read'">
+  <div class="to_read header" *ngIf="['to_read', undefined].includes(mode$ | async)">
     <h2>To Read</h2>
   </div>
-  <div class="reading header" *ngIf="!mode || mode === 'reading'">
+  <div class="reading header" *ngIf="['reading', undefined].includes(mode$ | async)">
     <h2>Reading</h2>
   </div>
-  <div class="read header" *ngIf="!mode || mode === 'read'">
+  <div class="read header" *ngIf="['read', undefined].includes(mode$ | async)">
     <h2>Read</h2>
   </div>
  <app-books-on-shelf class="book"

@@ -5,6 +5,7 @@ import { Action } from '@ngrx/store';
 import { BooksLoaded, LOAD_BOOKS } from './actions';
 import { concatMap, map } from 'rxjs/operators';
 import { ShelfService } from '../services/shelf.service';
+import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 
 @Injectable()
 export class BooksEffects {
@@ -13,6 +14,13 @@ export class BooksEffects {
   @Effect()
   fetchBooks$: Observable<Action> = this.actions$.pipe(
     ofType(LOAD_BOOKS),
+    concatMap(() => this.shelfSvc.fetchBooks()),
+    map(books => new BooksLoaded(books)),
+  );
+
+  @Effect()
+  fetchBooksOnLoad$: Observable<Action> = this.actions$.pipe(
+    ofType(ROUTER_NAVIGATION),
     concatMap(() => this.shelfSvc.fetchBooks()),
     map(books => new BooksLoaded(books)),
   );
