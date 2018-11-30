@@ -7,19 +7,15 @@
   <a routerLink="/shelf/{{collections.READ}}"> Read</a>
 </nav>
 <app-book-on-shelf-form (newBook)=newBookHandler($event)></app-book-on-shelf-form>
+<button (click)="loadBooks()">Load Books</button>
+<h2 *ngIf="this.isLoading$ | async">Is Loading...</h2>
 
-<div class="collection_container">
-  <div class="to_read header" *ngIf="!mode || mode === 'to_read'">
-    <h2>To Read</h2>
-  </div>
-  <div class="reading header" *ngIf="!mode || mode === 'reading'">
-    <h2>Reading</h2>
-  </div>
-  <div class="read header" *ngIf="!mode || mode === 'read'">
-    <h2>Read</h2>
+<div class="collection_container" *ngIf="(this.books$ | async)?.length">
+  <div class="header" [ngClass]="this.mode">
+    <h2>{{collectionTitle$|async}}</h2>
   </div>
  <app-books-on-shelf class="book"
-                     *ngFor="let book of books"
+                     *ngFor="let book of books$ | async"
                      [book]="book"
                      (collectionChange)="changeCollectionHandler($event)">
  </app-books-on-shelf>

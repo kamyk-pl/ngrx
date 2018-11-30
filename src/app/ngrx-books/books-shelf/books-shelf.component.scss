@@ -6,24 +6,25 @@
   color: #444;
   grid-auto-flow: column;
 }
-
 .header{
   text-align: center;
   text-transform: uppercase;
   font-size: 1.5em;
+  grid-column: 1 / -1;
+
 }
-  .book  {
+.book  {
     background-color: #444;
     color: #fff;
     border-radius: 5px;
-  }
-  .to_read{
-    grid-column: 1 ;
-  }
-  .reading {
-    grid-column: 2 ;
-  }
-  .read {
-    grid-column:  3;
-  }
+}
 
+.to_read{
+  grid-column: 1 !important;
+}
+.reading {
+  grid-column: 2 !important;;
+}
+.read {
+  grid-column: 3 !important;;
+}

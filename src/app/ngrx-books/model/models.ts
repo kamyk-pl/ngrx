@@ -1,5 +1,7 @@
-export class NgRxBook {
+import * as uuid from 'uuid/v4';
 
+export class NgRxBook {
+  public readonly id:string = uuid();
   constructor(public title: string, public collection: Collections) {
   }
 }
